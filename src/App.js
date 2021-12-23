@@ -10,21 +10,27 @@ import Article from "./components/Article"
 
 function App() {
   const [data, setData] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
+    setIsLoading(false)
     const fetchData = async () => {
       const { data } = await axios.get(
-        "https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=9563f2eabf4545828044a53c53254448"
+        `https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=${process.env.REACT_APP_API_KEY}`
       )
-
+      setIsLoading(true)
       setData(data)
     }
     fetchData()
-  }, [])
+  }, [isLoading])
   return (
     <Router>
       <Header />
       <Routes>
-        <Route exact path="/" element={<Home data={data} />}></Route>
+        <Route
+          exact
+          path="/"
+          element={<Home data={data} isLoading={isLoading} />}
+        ></Route>
         <Route
           exact
           path="/article/:title"
