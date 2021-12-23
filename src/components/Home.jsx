@@ -12,7 +12,7 @@ const Home = ({ data }) => {
           <div className="articles-container">
             {data &&
               data.articles.map((article) => (
-                <article className="card">
+                <article key={article.title} className="card">
                   <div className="category category-sports">Sports</div>
                   <h3>
                     {/* <Link to={`/article/${article.title}`}>
